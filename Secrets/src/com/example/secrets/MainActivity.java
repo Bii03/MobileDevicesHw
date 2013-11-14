@@ -124,6 +124,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 		{
 			showDialog(DIALOG_ALERT);
 		}
+		
 	}
 
 	@Override
@@ -289,6 +290,9 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
         		    CheckBox cb = (CheckBox)itemLayout.findViewById(R.id.checkBox1);
         		    cb.setChecked(false);
         		}
+        		isEditEnabled = false;
+        		isDeleteEnabled = false;
+        		invalidateOptionsMenu();
             }
          })
         .setNegativeButton(R.string.delete_dialog_cancel, new DialogInterface.OnClickListener() {

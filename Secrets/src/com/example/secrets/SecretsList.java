@@ -54,7 +54,9 @@ public class SecretsList extends BaseAdapter{
 	
 	public void uncheckAll(){
 		checkedBoxIndexes = new ArrayList<Integer>();
-		checkedItems = 0;
+		//checkedItems = 0;
+		
+		
 	}
 	
 
@@ -90,6 +92,7 @@ public class SecretsList extends BaseAdapter{
 			    	  contextMenu.findItem(R.id.action_delete).setEnabled(true);
 			    	  contextMenu.findItem(R.id.action_delete).setVisible(true);
 			    	  if(checkedItems==1){
+			    		  Log.d("goin bananas", "it should edit");
 			    		  contextMenu.findItem(R.id.action_edit).setEnabled(true);
 			    		  contextMenu.findItem(R.id.action_edit).setVisible(true);
 			    	  }
