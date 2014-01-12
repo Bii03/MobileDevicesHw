@@ -58,6 +58,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 	private EditText passwordInput;
 	private String password;
 	private static String fileName = "mySecrets";
+	private static String resultedFile = "resultedSecrets";
 	private Context context;
 	private File mySecretFile;
 	private ListView secretsList;
@@ -79,15 +80,9 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 		adapter = new SecretsList(this);
 
 		secretsList.setAdapter(adapter);
-		//enabling/disabling of edit and delete buttons
-		
-		
 		
 		context = (Context) this;
-//		LayoutInflater inflater = this.getLayoutInflater();
-//		View listItem = inflater.inflate(R.layout.secret_row, null);
-//		CheckBox listCheckBox = (CheckBox)listItem.findViewById(R.id.checkBox1);
-//		listCheckBox.setOnCheckedChangeListener(this);
+
 		String path = context.getFilesDir().getAbsolutePath() + "/" + fileName;
 		mySecretFile = new File(path);
 		//TODO make the following dialog (password prompt) appear only when you launch the application 
@@ -156,11 +151,25 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 		case (R.id.action_delete):
 			deleteSecrets();
 			return true;
+		case (R.id.action_import_export):
+			importExport();
+		return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 	
+	private void importExport() {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(this,ImportExport.class);
+		
+//	      intent.setAction(Intent.ACTION_GET_CONTENT);
+//	      intent.setType("file/*");
+	      intent.putExtra("FileName", fileName);
+	      intent.putExtra("ResultedFile", resultedFile);
+	      startActivity(intent);	
+	}
+
 	@Override
 	//it saves smth=> bundle is not null
 	protected void onSaveInstanceState(Bundle outState) {
@@ -185,14 +194,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 		startActivity(intent);
 		Log.d("intent", "here");
 		Log.d("intent", getIntent().getExtras()+"");
-//		Bundle extras = getIntent().getExtras();
-//		if(extras != null)
-//		{
-//			String r = extras.getString("Secret");
-//			Log.d("listtt", r);
-//			adapter.addNewSecret(r);
-//			displayList();
-//		}
+
 	}
 	
 	private void openEdit(){
@@ -301,9 +303,6 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
             }
          })
          .show();
-		
-		
-		
 
 	}
 
@@ -384,7 +383,6 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 				message.show();
 				this.passwordIsChecked = true;
 				 SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-				 //this.passwordIsChecked = preferences.setBoolean("passwordIsChecked", true); // value to store 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -400,12 +398,11 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 				inputStream = context.openFileInput(fileName);
 				inputStreamReader = new InputStreamReader(inputStream);
 				bufferedReader = new BufferedReader(inputStreamReader);
-//				while((line = bufferedReader.readLine()) != null)
-//					Log.d("pass", line+" liiiine");
 
 				if ((line = bufferedReader.readLine()) != null) {
 					Log.d("pass", line+" fiiirst line");
 					Log.d("pass", password+" paaassword");
+					
 					
 					if (line.equalsIgnoreCase(password)) {
 						this.passwordIsChecked = true;
@@ -435,6 +432,32 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void encryptFile(){
+		
+		try {
+			FileInputStream inputStream;
+			InputStreamReader inputStreamReader;
+			BufferedReader bufferedReader;
+			StringBuilder sb = new StringBuilder();
+			String line;
+			
+			inputStream = context.openFileInput(fileName);
+			inputStreamReader = new InputStreamReader(inputStream);
+			bufferedReader = new BufferedReader(inputStreamReader);
+			int i = 0;
+			while ((line = bufferedReader.readLine()) != null) {
+				if(i != 0){
+					adapter.addNewSecret(line);
+				}
+				else Log.d("pass", "firstLine "+line);
+				i++;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void displayList(){
@@ -493,8 +516,6 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 		  SharedPreferences preferences = getPreferences(MODE_PRIVATE);
 		  this.passwordIsChecked = preferences.getBoolean("passwordIsChecked", false); // value to store    
 		  Log.d("dialog", "on resume "+this.passwordIsChecked);
-//		  if(!this.passwordIsChecked)
-//			  showDialog(DIALOG_ALERT);
 	}
 
 	@Override
@@ -510,52 +531,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View item, int position, long arg3) {
 		// TODO Auto-generated method stub
-//			CheckBox check = (CheckBox)item.findViewById(R.id.checkBox1);
-//			Log.d("goin bananas", "heeeere");
-//			SparseBooleanArray checkedItems	= secretsList.getCheckedItemPositions();
-//			Log.d("goin bananas", checkedItems+"");
-//			int selectedCount = checkedItems.size();
-//			Iterator i = checked.entrySet().iterator();
-//			boolean found = false;
-//			while(i.hasNext()){
-//				Map.Entry<Integer, Boolean> pair = (Map.Entry<Integer, Boolean>)i.next();
-//				if(pair.getKey()== position){
-//					if(pair.getValue()){
-//						check.setChecked(false);
-//						selectedCount--;
-//						checked.put(pair.getKey(), false);
-//					}
-//					else {
-//						check.setChecked(true);
-//						checked.put(pair.getKey(), true);
-//					}
-//					found = true;
-//					
-//				}
-//			}
-//			if(!found){
-//				checked.put(position, true);
-//				check.setChecked(true);
-//			}
-//			
-//			
-//			
-//				Log.d("goin bananas", selectedCount+"");
-//				if (selectedCount > 0){
-//					isDeleteEnabled = true;
-//					if (selectedCount == 1){
-//						isEditEnabled = true;
-//						editPosition = position;
-//					}
-//					else{
-//						isEditEnabled = false;
-//					}
-//				}
-//				else{
-//					isDeleteEnabled = false;
-//					isEditEnabled = false;
-//				}
-//				invalidateOptionsMenu();
+
 			}
 
 	@Override
@@ -606,6 +582,4 @@ public class MainActivity extends Activity implements OnItemClickListener, OnChe
 		myOutWriter.close();
 	}
 
-
-	
 }

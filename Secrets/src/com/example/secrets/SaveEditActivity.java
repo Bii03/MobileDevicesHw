@@ -71,8 +71,7 @@ public class SaveEditActivity extends Activity{
 				
 				if(option.contentEquals("0")==true)
 				{				
-					
-			    	//adding to file
+
 					String text = newSecret.getText().toString();
 					try {
 		
@@ -96,8 +95,6 @@ public class SaveEditActivity extends Activity{
 					}
 				}
 					//reading
-					
-				
 				else
 				{
 					String text = newSecret.getText().toString();
@@ -133,19 +130,6 @@ public class SaveEditActivity extends Activity{
 						        Log.d("finalContent", line+separator);
 						    }
 						      
-						    //newSecret.setText(line); //set previous text inside textfield
-						    
-						    /*
-						    saveEdit.setOnClickListener(new OnClickListener() {
-									
-								@Override
-								public void onClick(View v) {
-									// TODO Auto-generated method stub
-									Log.d("saveedit","onclick");
-									newText.replace(newText, newSecret.getText().toString());
-									finalContent.append(newText);
-								}
-							});*/
 						    Log.d("Seb",line);
 						    finalContent.append(text + separator);
 						    
@@ -215,42 +199,14 @@ public class SaveEditActivity extends Activity{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		LayoutInflater inflater = this.getLayoutInflater();
 		View dialogView = inflater.inflate(R.layout.dialog_save_edit, null);
-//		String passwordInput = (EditText) dialogView.findViewById(R.id.saveEdit).get.toString();
 
 		builder.setTitle(R.string.saveEditDialog)
 				.setView(dialogView)
 				.setPositiveButton("Save", new OkOnClickListener())
 				.setNegativeButton("Cancel", new CancelOnClickListener());
-	
-		//saveEditAlertDialog = builder.create();
-		//saveEditAlertDialog.show();
-		
-		/*
-		 	// Set up the buttons
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { 
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	
-		    	Intent intent = new Intent( SaveEditActivity.this, MainActivity.class);
-				intent.putExtra("Secret", text);
-				
-				
-				startActivity(intent);
-				//finish();
-		    }
-		});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
 
-		builder.show();
 		
-	}
-	
-		 */
+		
 	}
 	
 	private final class OkOnClickListener implements	DialogInterface.OnClickListener {

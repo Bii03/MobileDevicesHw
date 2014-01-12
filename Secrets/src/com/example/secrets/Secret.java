@@ -1,6 +1,7 @@
 package com.example.secrets;
 
 public class Secret {
+	
 	private String description;
 
 	
@@ -21,6 +22,8 @@ public class Secret {
 	public String getDescription(){
 		return this.description;
 	}
+	
+	
 	
 
 }
